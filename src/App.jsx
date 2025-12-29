@@ -15,30 +15,40 @@ const Reveal = ({ children, delay = 0 }) => (
   </motion.div>
 );
 
+// High-end spring physics for both hover (mouse) and tap (mobile)
 const popHover = {
   hover: { 
-    y: -8,
+    y: -10,
     scale: 1.02,
-    transition: { type: "spring", stiffness: 400, damping: 17 }
+    transition: { type: "spring", stiffness: 400, damping: 15 }
   }
 };
 
-// --- Components ---
+// --- Sub-Components ---
 
 const Navbar = () => (
   <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
     <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-        <motion.div whileHover={{ rotate: 15, scale: 1.1 }} className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-200">
+        <motion.div 
+          whileHover={{ rotate: 15, scale: 1.1 }} 
+          whileTap={{ scale: 0.9 }} 
+          className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-200"
+        >
           <Home className="text-white w-4 h-4" />
         </motion.div>
         <span className="text-xl font-display font-black text-slate-900 tracking-tighter">Makaan<span className="text-blue-600">.ae</span></span>
       </div>
       <div className="hidden md:flex items-center gap-8 font-bold text-slate-400 text-[10px] uppercase tracking-[0.2em]">
-        <a href="#living" className="hover:text-blue-600 transition-colors uppercase">Living</a>
-        <a href="#facilities" className="hover:text-blue-600 transition-colors uppercase">Facilities</a>
-        <a href="#faq" className="hover:text-blue-600 transition-colors uppercase">FAQ</a>
-        <button onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black hover:bg-blue-600 transition active:scale-95 shadow-lg uppercase">Claim Spot</button>
+        <a href="#living" className="hover:text-blue-600 transition-colors">Living</a>
+        <a href="#facilities" className="hover:text-blue-600 transition-colors">Facilities</a>
+        <a href="#faq" className="hover:text-blue-600 transition-colors">FAQ</a>
+        <button 
+          onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} 
+          className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black hover:bg-blue-600 transition active:scale-95 shadow-lg"
+        >
+          Claim Spot
+        </button>
       </div>
     </div>
   </nav>
@@ -65,8 +75,9 @@ const FAQItem = ({ question, answer }) => {
 
 const RoomCard = ({ title, price, location, image, available = true }) => (
   <motion.div 
-    whileHover={{ y: -8 }}
-    className={`bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm transition-all hover:shadow-xl ${!available && 'opacity-70 grayscale-[0.5]'}`}
+    whileHover={{ y: -10 }}
+    whileTap={{ scale: 0.98 }}
+    className={`bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm transition-all hover:shadow-2xl ${!available && 'opacity-70 grayscale-[0.5]'}`}
   >
     <div className="relative h-56 overflow-hidden bg-slate-100">
       <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
@@ -96,9 +107,12 @@ const RoomCard = ({ title, price, location, image, available = true }) => (
   </motion.div>
 );
 
+// --- Main App ---
+
 export default function App() {
   const [status, setStatus] = useState('');
 
+  // Lenis Smooth Scroll Init for premium feel
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.2 });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
@@ -121,7 +135,7 @@ export default function App() {
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased overflow-x-hidden text-slate-900 bg-white">
       <Navbar />
 
-      {/* 1. Hero Section - The "Perfect" Look */}
+      {/* Hero Section */}
       <section id="home" className="relative pt-32 pb-16 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
@@ -130,12 +144,14 @@ export default function App() {
             </h1>
             <p className="text-lg text-slate-500 font-light mb-8 max-w-md leading-relaxed">Premium student living in the heart of Al Barsha, Dubai. Designed for excellence and community.</p>
             
+            {/* USP Chips - with whileTap fix for mobile */}
             <div className="flex flex-col gap-3 mb-10">
                {['Community-driven living', 'Affordable housing', 'Prime Dubai Location'].map((usp, i) => (
                  <motion.div 
                    key={i}
                    variants={popHover}
                    whileHover="hover"
+                   whileTap="hover"
                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-gray-100 shadow-sm w-fit group cursor-default"
                  >
                     <motion.div whileHover={{ rotate: 20, scale: 1.2 }} transition={{ type: "spring" }}>
@@ -157,9 +173,8 @@ export default function App() {
             <img 
               src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000" 
               className="relative rounded-[2.5rem] shadow-2xl h-[480px] w-full object-cover border-[10px] border-white transition-transform duration-700 hover:scale-[1.01]" 
-              alt="Designer Room" 
+              alt="Designer Student Room" 
             />
-            {/* FLOATING BADGE */}
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-2xl border border-slate-50 hidden md:block">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center"><Heart className="w-5 h-5 text-green-600 fill-current" /></div>
@@ -170,20 +185,19 @@ export default function App() {
         </div>
       </section>
 
-      {/* 2. Living Section - 3 Rooms Grid */}
+      {/* Living Section */}
       <section id="living" className="py-20 max-w-6xl mx-auto px-6">
         <Reveal>
           <h2 className="text-4xl font-display font-black mb-12 tracking-tighter">Available Rooms</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <RoomCard title="Modern Shared" price="1,200" location="15 mins" image="https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800" />
             <RoomCard title="Premium Triple" price="1,350" location="10 mins" image="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800" />
-            {/* FIXED 3RD ROOM IMAGE */}
             <RoomCard title="Standard Room" price="1,100" location="20 mins" image="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800" available={false} />
           </div>
         </Reveal>
       </section>
 
-      {/* 3. Why Choose Section - Dark Premium Grid */}
+      {/* Facilities Section - with whileTap fix for mobile */}
       <section id="facilities" className="py-20 bg-[#0f0f0f] text-white">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal>
@@ -195,12 +209,12 @@ export default function App() {
               {[
                 { icon: Users, color: "#4ade80", t: "Live & Network", d: "Connect with world-class students and expand your global professional network." },
                 { icon: Train, color: "#38bdf8", t: "Prime Connectivity", d: "Steps away from the Dubai Metro. Your gateway to the entire city." },
-                { icon: ShieldCheck, color: "#a3e635", t: "24/7 Total Safety", d: "On-site security and dedicated student support teams at all hours." },
+                { icon: ShieldCheck, color: "#a3e635", t: "24/7 Safety", d: "On-site security and dedicated student support teams at all hours." },
                 { icon: Zap, color: "#2dd4bf", t: "All-Inclusive Living", d: "Utilities, cooling, and maintenance are all included in your monthly rent." },
                 { icon: Wifi, color: "#818cf8", t: "Ultra High-Speed WiFi", d: "Uncapped fiber internet perfect for online lectures, streaming, and gaming." },
                 { icon: Sofa, color: "#10b981", t: "Fully Furnished", d: "Move in hassle-free with high-end designer furniture and appliances." }
               ].map((item, i) => (
-                <motion.div key={i} variants={popHover} whileHover="hover" className="bg-[#181818] p-8 rounded-[2rem] border border-white/5 group">
+                <motion.div key={i} variants={popHover} whileHover="hover" whileTap="hover" className="bg-[#181818] p-8 rounded-[2rem] border border-white/5 group cursor-default">
                   <motion.div whileHover={{ rotate: 10, scale: 1.1 }} className="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style={{ backgroundColor: item.color }}><item.icon className="text-white w-5 h-5" /></motion.div>
                   <h4 className="text-xl font-display font-bold mb-3 tracking-tight">{item.t}</h4>
                   <p className="text-gray-500 text-sm leading-relaxed font-light">{item.d}</p>
@@ -211,7 +225,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 4. FAQ Section */}
+      {/* FAQ Section */}
       <section id="faq" className="py-20 bg-gray-50">
         <div className="max-w-3xl mx-auto px-6">
           <Reveal>
@@ -226,7 +240,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Contact Section */}
+      {/* Contact Section */}
       <section id="contact" className="py-20 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
         <Reveal>
           <h2 className="text-6xl font-display font-extrabold text-slate-950 leading-[0.9] tracking-tighter mb-6 uppercase">Contact <br /> Us <span className="text-blue-600">.</span></h2>
