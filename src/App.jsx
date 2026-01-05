@@ -128,14 +128,15 @@ export default function App() {
 
   return (
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased text-slate-900 bg-white">
-      {/* Navbar */}
+      {/* Navbar with Darker Links */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg"><Home className="text-white w-4 h-4" /></div>
             <span className="text-xl font-display font-black text-slate-900 tracking-tighter uppercase italic">Makaan</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 font-black text-slate-900 text-[10px] uppercase tracking-[0.2em]">
+          {/* FIXED: Darker text links */}
+          <div className="hidden md:flex items-center gap-8 font-bold text-slate-900 text-[10px] uppercase tracking-[0.2em]">
             <button onClick={() => scrollTo('living')} className="hover:text-blue-600 transition-colors">Living</button>
             <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600 transition-colors">Why Us</button>
             <button onClick={() => scrollTo('contact')} className="hover:text-blue-600 transition-colors">Contact</button>
@@ -144,22 +145,28 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-40 pb-24 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+      {/* Hero Section - FIXED: pt-24 pulls the content up */}
+      <section className="pt-24 pb-20 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          {/* FIXED: Reduced gap (mb-8 -> mb-4) */}
+          {/* Hero Icons with Hover Pop */}
           <div className="flex gap-4 mb-4">
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Star size={14}/> Community</motion.div>
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Zap size={14}/> Premium</motion.div>
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><MapPin size={14}/> Al Barsha</motion.div>
           </div>
           
-          <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic">Live Bold. <br /><span className="text-slate-400 font-light italic">Study Smart.</span></h1>
-          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student living in the heart of Al Barsha, Dubai.</p>
+          <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic text-slate-900">Live Bold. <br /><span className="text-slate-400 font-light italic text-6xl md:text-8xl">STUDY SMART.</span></h1>
+          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student housing in the heart of Al Barsha, Dubai.</p>
           <div className="flex gap-4">
             <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight active:scale-95">Explore Living</button>
-            {/* FIXED: Added hover:scale-105 for pop effect */}
-            <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight active:scale-95 hover:scale-105">Enquire Now</button>
+            {/* FIXED: Enquire Now button pop on hover */}
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              onClick={() => scrollTo('contact')} 
+              className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg shadow-sm hover:bg-slate-50 transition-all uppercase tracking-tight active:scale-95"
+            >
+              Enquire Now
+            </motion.button>
           </div>
         </Reveal>
         <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl border-[15px] border-white">
@@ -167,12 +174,12 @@ export default function App() {
         </div>
       </section>
 
-      {/* Why Makaan Section */}
+      {/* Why Makaan Section (Keeping your vibrant blue version) */}
       <section id="facilities" className="py-24 bg-gradient-to-b from-blue-600 to-blue-700 text-white relative">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan?</h2>
+              <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic text-white">Why Makaan?</h2>
               <p className="text-blue-100 max-w-xl mx-auto text-sm font-light leading-relaxed uppercase tracking-widest">High-performance living for high-performance students.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
@@ -203,24 +210,20 @@ export default function App() {
             <div className="h-px flex-1 bg-slate-100 mx-10 hidden md:block"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-12">
-            <RoomCard 
-              title="Modern Shared" price="2,500" location="15 mins" 
-              metro="5 min walk from Insurance Market Metro Station"
-              images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} 
-            />
+            <RoomCard title="Modern Shared" price="2,500" location="15 mins" metro="5 min walk from Insurance Market Metro Station" images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} />
             <RoomCard title="Premium Triple" price="3,000" location="10 mins" available={false} images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} />
+            {/* Standard Room Image Added */}
             <RoomCard title="Standard Room" price="2,000" location="20 mins" available={false} images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} />
           </div>
         </Reveal>
       </section>
 
-      {/* Form Section with UPDATED CONTACT INFO */}
+      {/* Form Section with Correct Contact Info */}
       <section id="contact" className="py-32 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
           <Reveal>
-            <h2 className="text-7xl font-display font-black tracking-tighter mb-8 uppercase italic">Book <br /> Your Spot <span className="text-blue-600">.</span></h2>
+            <h2 className="text-7xl font-display font-black tracking-tighter mb-8 uppercase italic text-slate-900">Book <br /> Your Spot <span className="text-blue-600">.</span></h2>
             <div className="space-y-6">
-               {/* FIXED: Updated Phone and Email */}
                <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><Phone className="text-blue-600" /> +971 52 660 2999</div>
                <div className="flex items-center gap-4 font-bold text-xl text-slate-800 break-all"><Mail className="text-blue-600 flex-shrink-0" /> sanat@securemyscholarship.com</div>
                <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><MapPin className="text-blue-600" /> Al Barsha, Dubai</div>
