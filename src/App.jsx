@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart, X, ChevronLeft, ChevronRight, Footprints } from 'lucide-react';
+import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart, X, ChevronLeft, ChevronRight, Footprints, MessageSquare } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
-// --- Global Animation Logic ---
+// --- Animation Wrapper ---
 const Reveal = ({ children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
@@ -19,7 +19,7 @@ const popHover = {
   hover: { y: -10, scale: 1.02, transition: { type: "spring", stiffness: 400, damping: 15 } }
 };
 
-// --- Image Slider Modal (Fixed for Tall Portrait Images) ---
+// --- Image Slider Modal (Fixed for Portrait Images) ---
 const ImageModal = ({ images, isOpen, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -42,7 +42,6 @@ const ImageModal = ({ images, isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="h-[85vh] w-full max-w-4xl flex items-center justify-center"
           >
-            {/* object-contain ensures the TALL photo is fully visible without cropping */}
             <img src={images[currentIndex]} className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl border border-white/5" alt="Room View" />
           </motion.div>
           
@@ -57,7 +56,7 @@ const ImageModal = ({ images, isOpen, onClose }) => {
   );
 };
 
-// --- Room Card (Fixed Aspect Ratio for Portrait Photos) ---
+// --- Room Card (Portrait Aspect Ratio Fix) ---
 const RoomCard = ({ title, price, location, metro, images, available = true }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -69,7 +68,6 @@ const RoomCard = ({ title, price, location, metro, images, available = true }) =
         onClick={() => available && setIsModalOpen(true)}
         className={`bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm transition-all ${available ? 'hover:shadow-2xl cursor-pointer' : 'opacity-60 grayscale-[0.8] cursor-not-allowed'}`}
       >
-        {/* Changed to aspect-[4/5] to fit your tall room photos better */}
         <div className="relative aspect-[4/5] overflow-hidden bg-slate-100 group">
           <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
           {!available && (
@@ -118,13 +116,25 @@ export default function App() {
     } catch (e) { setStatus('Error. Try again.'); }
   };
 
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased text-slate-900 bg-white">
+      {/* RESTORED: Navbar buttons */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg"><Home className="text-white w-4 h-4" /></div>
             <span className="text-xl font-display font-black text-slate-900 tracking-tighter uppercase italic">Makaan</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 font-bold text-slate-400 text-[10px] uppercase tracking-[0.2em]">
+            <button onClick={() => scrollTo('living')} className="hover:text-blue-600">Living</button>
+            <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600">Facilities</button>
+            <button onClick={() => scrollTo('contact')} className="hover:text-blue-600">Contact</button>
+            <button onClick={() => scrollTo('contact')} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black uppercase">Claim Spot</button>
           </div>
         </div>
       </nav>
@@ -132,12 +142,50 @@ export default function App() {
       {/* Hero Section */}
       <section className="pt-40 pb-24 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase">Live Bold. <br /><span className="text-slate-400 font-light italic">Study Smart.</span></h1>
-          <p className="text-xl text-slate-500 font-light mb-10 max-w-md leading-relaxed">Luxury student living in the heart of Al Barsha, Dubai.</p>
-          <button onClick={() => document.getElementById('living').scrollIntoView({behavior:'smooth'})} className="bg-blue-600 text-white px-12 py-5 rounded-2xl font-black text-xl shadow-2xl hover:bg-slate-900 transition-all active:scale-95 uppercase tracking-tight">Explore Living</button>
+          {/* RESTORED: Hero feature icons */}
+          <div className="flex gap-4 mb-8">
+            <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider"><Star size={14}/> Community</div>
+            <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider"><Zap size={14}/> Premium</div>
+            <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider"><MapPin size={14}/> Al Barsha</div>
+          </div>
+          
+          <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic">Live Bold. <br /><span className="text-slate-400 font-light italic">Study Smart.</span></h1>
+          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student housing in the heart of Al Barsha, Dubai.</p>
+          <div className="flex gap-4">
+            <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight">Explore Living</button>
+            <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight">Enquire Now</button>
+          </div>
         </Reveal>
         <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl border-[15px] border-white">
           <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover" alt="Makaan Luxury" />
+        </div>
+      </section>
+
+      {/* RESTORED: Why Makaan Section */}
+      <section id="facilities" className="py-24 bg-gradient-to-b from-blue-600 to-blue-700 text-white relative">
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <Reveal>
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan?</h2>
+              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light uppercase tracking-widest">High-performance living for high-performance students.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: Users, t: "Live & Network", d: "Join a thriving community of global students." },
+                { icon: Train, t: "Prime Location", d: "Steps away from the Dubai Metro gateway." },
+                { icon: ShieldCheck, t: "24/7 Security", d: "On-site safety teams around the clock." },
+                { icon: Zap, t: "All-Inclusive", d: "Bills, DEWA, and AC included in one price." },
+                { icon: Wifi, t: "Fiber WiFi", d: "Ultra-fast internet for focus and gaming." },
+                { icon: Sofa, t: "Designer Spaces", d: "Move-in ready with modern furniture." }
+              ].map((item, i) => (
+                <motion.div key={i} variants={popHover} whileHover="hover" whileTap="hover" className="bg-white p-8 rounded-[2.5rem] shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 text-blue-600"><item.icon size={24} /></div>
+                  <h4 className="text-xl font-display font-bold mb-3 text-slate-900">{item.t}</h4>
+                  <p className="text-slate-500 text-sm font-light leading-relaxed">{item.d}</p>
+                </motion.div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -160,7 +208,7 @@ export default function App() {
         </Reveal>
       </section>
 
-      {/* Contact Form */}
+      {/* RESTORED: Full Form Section with Requirements */}
       <section id="contact" className="py-32 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
           <Reveal>
@@ -168,6 +216,7 @@ export default function App() {
             <div className="space-y-6">
                <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><Phone className="text-blue-600" /> +971 50 XXX XXXX</div>
                <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><Mail className="text-blue-600" /> hello@makaan.ae</div>
+               <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><MapPin className="text-blue-600" /> Al Barsha, Dubai</div>
             </div>
           </Reveal>
           <form onSubmit={handleSubmit} className="bg-white p-12 rounded-[3.5rem] shadow-2xl border border-gray-100">
@@ -179,7 +228,9 @@ export default function App() {
                <select name="gender" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Gender</option><option>Male</option><option>Female</option></select>
                <select name="institute" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Institute</option><option>Middlesex</option><option>Heriot-Watt</option><option>UOWD</option><option>Other</option></select>
             </div>
-            <input name="email" type="email" placeholder="Email Address" required className="w-full mb-8 p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
+            <input name="email" type="email" placeholder="Email Address" required className="w-full mb-6 p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
+            <textarea name="requirements" placeholder="Tell us about your housing requirements..." rows="3" className="w-full mb-8 p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100"></textarea>
+            
             <button className="w-full bg-slate-900 text-white py-6 rounded-2xl font-black text-xl hover:bg-blue-600 transition shadow-xl uppercase tracking-[0.2em] active:scale-95">Apply Now</button>
             {status && <p className="mt-6 text-center text-blue-600 font-black text-xs uppercase animate-pulse">{status}</p>}
           </form>
