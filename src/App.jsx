@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart } from 'lucide-react';
+import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
@@ -15,7 +15,6 @@ const Reveal = ({ children, delay = 0 }) => (
   </motion.div>
 );
 
-// High-end spring physics for both hover (mouse) and tap (mobile)
 const popHover = {
   hover: { 
     y: -10,
@@ -24,31 +23,22 @@ const popHover = {
   }
 };
 
-// --- Sub-Components ---
+// --- Components ---
 
 const Navbar = () => (
   <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
     <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-        <motion.div 
-          whileHover={{ rotate: 15, scale: 1.1 }} 
-          whileTap={{ scale: 0.9 }} 
-          className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-200"
-        >
+        <motion.div whileHover={{ rotate: 15, scale: 1.1 }} className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-200">
           <Home className="text-white w-4 h-4" />
         </motion.div>
-        <span className="text-xl font-display font-black text-slate-900 tracking-tighter">Makaan<span className="text-blue-600">.ae</span></span>
+        <span className="text-xl font-display font-black text-slate-900 tracking-tighter">Makaan</span>
       </div>
       <div className="hidden md:flex items-center gap-8 font-bold text-slate-400 text-[10px] uppercase tracking-[0.2em]">
-        <a href="#living" className="hover:text-blue-600 transition-colors">Living</a>
-        <a href="#facilities" className="hover:text-blue-600 transition-colors">Facilities</a>
-        <a href="#faq" className="hover:text-blue-600 transition-colors">FAQ</a>
-        <button 
-          onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} 
-          className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black hover:bg-blue-600 transition active:scale-95 shadow-lg"
-        >
-          Claim Spot
-        </button>
+        <a href="#living" className="hover:text-blue-600 transition-colors uppercase">Living</a>
+        <a href="#facilities" className="hover:text-blue-600 transition-colors uppercase">Facilities</a>
+        <a href="#faq" className="hover:text-blue-600 transition-colors uppercase">FAQ</a>
+        <button onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black hover:bg-blue-600 transition active:scale-95 shadow-lg uppercase">Claim Spot</button>
       </div>
     </div>
   </nav>
@@ -95,11 +85,7 @@ const RoomCard = ({ title, price, location, image, available = true }) => (
       </div>
       <div className="flex items-center justify-between border-t border-gray-50 pt-5">
         <p className="text-xl font-display font-black text-blue-600">AED {price}<span className="text-slate-300 text-[10px] font-normal">/mo</span></p>
-        <button 
-          onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})}
-          disabled={!available} 
-          className="bg-slate-50 p-3 rounded-xl text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer active:scale-95 shadow-sm"
-        >
+        <button onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} disabled={!available} className="bg-slate-50 p-3 rounded-xl text-slate-400 hover:bg-blue-600 hover:text-white transition-all cursor-pointer active:scale-95 shadow-sm">
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -107,12 +93,9 @@ const RoomCard = ({ title, price, location, image, available = true }) => (
   </motion.div>
 );
 
-// --- Main App ---
-
 export default function App() {
   const [status, setStatus] = useState('');
 
-  // Lenis Smooth Scroll Init for premium feel
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.2 });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
@@ -136,59 +119,78 @@ export default function App() {
       <Navbar />
 
       {/* Hero Section */}
-      <section id="home" className="relative pt-32 pb-16 overflow-hidden">
+      <section id="home" className="relative pt-32 pb-24 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
-            <h1 className="text-5xl md:text-6xl font-display font-black leading-[1.05] tracking-tighter mb-6">
-              Live Bold. <br /> Study <span className="text-blue-600 italic">Smart.</span>
+            <h1 className="text-5xl md:text-7xl font-display font-black leading-[1] tracking-tighter mb-6">
+              Makaan. <br /> 
+              <span className="text-slate-400">Study Smart.</span>
             </h1>
-            <p className="text-lg text-slate-500 font-light mb-8 max-w-md leading-relaxed">Premium student living in the heart of Al Barsha, Dubai. Designed for excellence and community.</p>
+            <p className="text-lg text-slate-500 font-light mb-8 max-w-md leading-relaxed italic">The premier choice for student living in Al Barsha, Dubai.</p>
             
-            {/* USP Chips - with whileTap fix for mobile */}
             <div className="flex flex-col gap-3 mb-10">
                {['Community-driven living', 'Affordable housing', 'Prime Dubai Location'].map((usp, i) => (
-                 <motion.div 
-                   key={i}
-                   variants={popHover}
-                   whileHover="hover"
-                   whileTap="hover"
-                   className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-gray-100 shadow-sm w-fit group cursor-default"
-                 >
-                    <motion.div whileHover={{ rotate: 20, scale: 1.2 }} transition={{ type: "spring" }}>
-                        <Star className="w-4 h-4 text-blue-600 fill-current" />
-                    </motion.div>
+                 <motion.div key={i} variants={popHover} whileHover="hover" whileTap="hover" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-gray-100 shadow-sm w-fit group cursor-default">
+                    <Star className="w-4 h-4 text-blue-600 fill-current" />
                     <span className="font-bold text-slate-800 text-[11px] uppercase tracking-wider">{usp}</span>
                  </motion.div>
                ))}
             </div>
             
             <div className="flex gap-4">
-              <button onClick={() => document.getElementById('living').scrollIntoView({behavior:'smooth'})} className="bg-slate-900 text-white px-8 py-4 rounded-xl font-display font-black text-lg shadow-xl hover:bg-blue-600 transition cursor-pointer active:scale-95">Explore Living</button>
-              <button onClick={() => document.getElementById('contact').scrollIntoView({behavior:'smooth'})} className="bg-white border-2 border-slate-900 text-slate-900 px-8 py-4 rounded-xl font-display font-black text-lg hover:bg-slate-900 hover:text-white transition cursor-pointer active:scale-95">Book Viewing</button>
+              <button onClick={() => document.getElementById('living').scrollIntoView({behavior:'smooth'})} className="bg-slate-900 text-white px-8 py-4 rounded-xl font-display font-black text-lg shadow-xl hover:bg-blue-600 transition cursor-pointer active:scale-95">Explore Rooms</button>
             </div>
           </motion.div>
           
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2 }} className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-            <img 
-              src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000" 
-              className="relative rounded-[2.5rem] shadow-2xl h-[480px] w-full object-cover border-[10px] border-white transition-transform duration-700 hover:scale-[1.01]" 
-              alt="Designer Student Room" 
-            />
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2 }} className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-[2.5rem] blur opacity-20"></div>
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000" className="relative rounded-[2.5rem] shadow-2xl h-[480px] w-full object-cover border-[10px] border-white" alt="Makaan Luxury" />
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-2xl border border-slate-50 hidden md:block">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center"><Heart className="w-5 h-5 text-green-600 fill-current" /></div>
-                <div><p className="text-[10px] font-black uppercase text-slate-400">Student Choice</p><p className="text-sm font-bold text-slate-800">Top Rated 2025</p></div>
+                <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center"><Heart className="w-5 h-5 text-blue-600 fill-current" /></div>
+                <div><p className="text-[10px] font-black uppercase text-slate-400">Chosen by Students</p><p className="text-sm font-bold text-slate-800">Makaan Quality</p></div>
               </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
+      {/* Bright Why Choose Section */}
+      <section id="facilities" className="py-24 bg-gradient-to-b from-blue-600 to-blue-700 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <Reveal>
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan?</h2>
+              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light leading-relaxed">Experience a new standard of living designed specifically for student success.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: Users, t: "Live & Network", d: "Join a thriving community of students from across the globe." },
+                { icon: Train, t: "Prime Location", d: "Located steps from Dubai Metro for effortless city travel." },
+                { icon: ShieldCheck, t: "24/7 Security", d: "Your safety is our priority with around-the-clock on-site teams." },
+                { icon: Zap, t: "All-Inclusive", d: "One monthly payment covers rent, DEWA, cooling, and internet." },
+                { icon: Wifi, t: "Ultra High-Speed", d: "Dedicated fiber optic WiFi for seamless online learning." },
+                { icon: Sofa, t: "Fully Furnished", d: "Modern, designer-picked furniture ready for you to move in." }
+              ].map((item, i) => (
+                <motion.div key={i} variants={popHover} whileHover="hover" whileTap="hover" className="bg-white p-8 rounded-[2.5rem] shadow-xl group cursor-default">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 text-blue-600"><item.icon className="w-6 h-6" /></div>
+                  <h4 className="text-xl font-display font-bold mb-3 tracking-tight text-slate-900">{item.t}</h4>
+                  <p className="text-slate-500 text-sm leading-relaxed font-light">{item.d}</p>
+                </motion.div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Living Section */}
-      <section id="living" className="py-20 max-w-6xl mx-auto px-6">
+      <section id="living" className="py-24 max-w-6xl mx-auto px-6">
         <Reveal>
-          <h2 className="text-4xl font-display font-black mb-12 tracking-tighter">Available Rooms</h2>
+          <div className="flex items-center justify-between mb-12">
+            <h2 className="text-4xl font-display font-black tracking-tighter uppercase">Living Spaces</h2>
+            <div className="h-px flex-1 bg-slate-100 mx-8 hidden md:block"></div>
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
             <RoomCard title="Modern Shared" price="1,200" location="15 mins" image="https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800" />
             <RoomCard title="Premium Triple" price="1,350" location="10 mins" image="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800" />
@@ -197,75 +199,72 @@ export default function App() {
         </Reveal>
       </section>
 
-      {/* Facilities Section - with whileTap fix for mobile */}
-      <section id="facilities" className="py-20 bg-[#0f0f0f] text-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <Reveal>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan.ae?</h2>
-              <p className="text-gray-500 max-w-xl mx-auto text-sm font-light leading-relaxed">Designed for a frictionless student experience, from high-speed connectivity to total security.</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { icon: Users, color: "#4ade80", t: "Live & Network", d: "Connect with world-class students and expand your global professional network." },
-                { icon: Train, color: "#38bdf8", t: "Prime Connectivity", d: "Steps away from the Dubai Metro. Your gateway to the entire city." },
-                { icon: ShieldCheck, color: "#a3e635", t: "24/7 Safety", d: "On-site security and dedicated student support teams at all hours." },
-                { icon: Zap, color: "#2dd4bf", t: "All-Inclusive Living", d: "Utilities, cooling, and maintenance are all included in your monthly rent." },
-                { icon: Wifi, color: "#818cf8", t: "Ultra High-Speed WiFi", d: "Uncapped fiber internet perfect for online lectures, streaming, and gaming." },
-                { icon: Sofa, color: "#10b981", t: "Fully Furnished", d: "Move in hassle-free with high-end designer furniture and appliances." }
-              ].map((item, i) => (
-                <motion.div key={i} variants={popHover} whileHover="hover" whileTap="hover" className="bg-[#181818] p-8 rounded-[2rem] border border-white/5 group cursor-default">
-                  <motion.div whileHover={{ rotate: 10, scale: 1.1 }} className="w-10 h-10 rounded-xl flex items-center justify-center mb-6" style={{ backgroundColor: item.color }}><item.icon className="text-white w-5 h-5" /></motion.div>
-                  <h4 className="text-xl font-display font-bold mb-3 tracking-tight">{item.t}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed font-light">{item.d}</p>
-                </motion.div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* FAQ Section */}
-      <section id="faq" className="py-20 bg-gray-50">
+      <section id="faq" className="py-24 bg-slate-50">
         <div className="max-w-3xl mx-auto px-6">
           <Reveal>
-            <h2 className="text-3xl font-display font-black text-center mb-12 tracking-tighter uppercase">Frequently Asked Questions</h2>
-            <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
-              <FAQItem question="What is included in the monthly rent?" answer="Your monthly rent covers everything: a fully furnished room, electricity, water, cooling (A/C), high-speed fiber WiFi, and 24/7 building security." />
-              <FAQItem question="How far is it from Knowledge Park?" answer="Our student hubs are strategically located for a 10-20 minute commute to Knowledge Park and major universities via Metro or Bus." />
-              <FAQItem question="What is the minimum contract period?" answer="We offer flexible contracts starting from 6 months, ideal for university semesters, as well as annual leases." />
-              <FAQItem question="Can I view the room before booking?" answer="Absolutely. Use the contact form below to schedule a physical tour or a virtual viewing via video call." />
+            <h2 className="text-3xl font-display font-black text-center mb-12 tracking-tighter uppercase">Common Questions</h2>
+            <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+              <FAQItem question="What is included in the Makaan monthly rent?" answer="Your monthly rent covers everything: furniture, electricity, water, cooling, high-speed WiFi, and 24/7 building security." />
+              <FAQItem question="How far is the commute to Knowledge Park?" answer="Makaan locations are strategically chosen for a 10-20 minute commute via Dubai Metro or public bus." />
+              <FAQItem question="Are there flexible contract options?" answer="Yes, we offer seasonal and semester-based contracts specifically for university students." />
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+      <section id="contact" className="py-24 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
         <Reveal>
-          <h2 className="text-6xl font-display font-extrabold text-slate-950 leading-[0.9] tracking-tighter mb-6 uppercase">Contact <br /> Us <span className="text-blue-600">.</span></h2>
-          <div className="space-y-6 mt-10">
-            <div className="flex gap-4 items-center font-display font-bold text-xl"><div className="bg-blue-50 p-4 rounded-2xl text-blue-600 shadow-sm"><Phone className="w-5 h-5"/></div> +971 50 XXX XXXX</div>
-            <div className="flex gap-4 items-center font-display font-bold text-xl"><div className="bg-blue-50 p-4 rounded-2xl text-blue-600 shadow-sm"><Mail className="w-5 h-5"/></div> hello@makaan.ae</div>
+          <h2 className="text-6xl font-display font-extrabold text-slate-950 leading-[0.9] tracking-tighter mb-8 uppercase">Let's <br /> Talk <span className="text-blue-600">.</span></h2>
+          <div className="space-y-6">
+            <div className="flex gap-4 items-center font-bold text-xl"><Phone className="w-5 h-5 text-blue-600"/> +971 50 XXX XXXX</div>
+            <div className="flex gap-4 items-center font-bold text-xl"><Mail className="w-5 h-5 text-blue-600"/> hello@makaan.ae</div>
           </div>
         </Reveal>
         <Reveal>
-          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-slate-200/40">
+          <form onSubmit={handleSubmit} className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-2xl">
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <input name="firstName" placeholder="First Name" required className="p-4 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-50 text-sm font-medium" />
-              <input name="lastName" placeholder="Last Name" required className="p-4 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-50 text-sm font-medium" />
+              <input name="firstName" placeholder="First Name" required className="p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium" />
+              <input name="lastName" placeholder="Last Name" required className="p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium" />
             </div>
-            <input name="email" type="email" placeholder="Email Address" required className="w-full mb-4 p-4 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-50 text-sm font-medium" />
-            <input name="phone" placeholder="Phone Number" required className="w-full mb-4 p-4 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-50 text-sm font-medium" />
-            <textarea name="message" placeholder="Tell us about your requirements..." rows="3" className="w-full mb-6 p-4 rounded-xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-50 text-sm font-medium"></textarea>
-            <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-display font-black text-lg hover:bg-blue-600 transition cursor-pointer active:scale-95 shadow-xl">Submit Inquiry</button>
-            {status && <p className="mt-4 text-center text-blue-600 font-black uppercase tracking-widest text-xs animate-pulse">{status}</p>}
+            
+            <div className="grid grid-cols-2 gap-4 mb-4">
+               <select name="gender" required className="p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium text-slate-400">
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+               </select>
+               <select name="institute" required className="p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium text-slate-400">
+                  <option value="">Institute</option>
+                  <option value="Middlesex">Middlesex Dubai</option>
+                  <option value="Heriot-Watt">Heriot-Watt</option>
+                  <option value="UOWD">UOWD</option>
+                  <option value="Other">Other</option>
+               </select>
+            </div>
+
+            <input name="email" type="email" placeholder="Email Address" required className="w-full mb-4 p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium" />
+            
+            <select name="leadSource" required className="w-full mb-4 p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium text-slate-400">
+                <option value="">How did you hear about Makaan?</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Friend/Referral">Friend/Referral</option>
+                <option value="Google Search">Google Search</option>
+                <option value="University Campus">University Campus</option>
+            </select>
+
+            <textarea name="message" placeholder="Any specific requirements?" rows="3" className="w-full mb-6 p-4 rounded-2xl bg-slate-50 border-none outline-none focus:ring-2 ring-blue-100 text-sm font-medium"></textarea>
+            
+            <button className="w-full bg-slate-900 text-white py-5 rounded-2xl font-display font-black text-lg hover:bg-blue-600 transition active:scale-95 shadow-xl uppercase tracking-widest">Apply Now</button>
+            {status && <p className="mt-4 text-center text-blue-600 font-black text-xs animate-pulse uppercase tracking-widest">{status}</p>}
           </form>
         </Reveal>
       </section>
 
-      <footer className="py-12 border-t border-gray-50 text-center text-[9px] font-black uppercase tracking-[0.4em] text-slate-300">
-        Makaan.ae © 2025 | Luxury Student Housing Dubai
+      <footer className="py-12 border-t border-gray-100 text-center text-[9px] font-black uppercase tracking-[0.4em] text-slate-300">
+        Makaan © 2026 | Luxury Student Housing Dubai
       </footer>
     </div>
   );
