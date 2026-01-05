@@ -3,7 +3,7 @@ import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Tr
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
-// --- Animation Wrapper ---
+// --- Animation Wrappers ---
 const Reveal = ({ children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
@@ -19,9 +19,9 @@ const popHover = {
   hover: { y: -10, scale: 1.02, transition: { type: "spring", stiffness: 400, damping: 15 } }
 };
 
-// Hover effect for hero icons
-const iconHover = {
-  hover: { y: -5, scale: 1.1, transition: { type: "spring", stiffness: 300, damping: 10 } }
+// Movement effect for Hero Icons
+const iconPop = {
+  hover: { y: -8, scale: 1.1, rotate: 2, transition: { type: "spring", stiffness: 400, damping: 10 } }
 };
 
 // --- Image Slider Modal ---
@@ -47,7 +47,7 @@ const ImageModal = ({ images, isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="h-[85vh] w-full max-w-4xl flex items-center justify-center"
           >
-            <img src={images[currentIndex]} className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl" alt="Room View" />
+            <img src={images[currentIndex]} className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl border border-white/5" alt="Room View" />
           </motion.div>
           
           <div className="absolute bottom-10 flex gap-2">
@@ -76,7 +76,7 @@ const RoomCard = ({ title, price, location, metro, images, available = true }) =
         <div className="relative aspect-[4/5] overflow-hidden bg-slate-100 group">
           <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
           {!available && (
-            <div className="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
+            <div className="absolute inset-0 bg-slate-900/50 flex items-center justify-center">
               <span className="bg-white/90 backdrop-blur-md text-slate-900 px-6 py-2 rounded-full font-black uppercase text-[10px] tracking-widest shadow-xl">Sold Out</span>
             </div>
           )}
@@ -128,33 +128,33 @@ export default function App() {
 
   return (
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased text-slate-900 bg-white">
-      {/* Navbar with darker links */}
+      {/* Navbar with darker black links */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg"><Home className="text-white w-4 h-4" /></div>
             <span className="text-xl font-display font-black text-slate-900 tracking-tighter uppercase italic">Makaan</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 font-bold text-slate-900 text-[10px] uppercase tracking-[0.2em]">
+          <div className="hidden md:flex items-center gap-8 font-black text-slate-900 text-[10px] uppercase tracking-[0.2em]">
             <button onClick={() => scrollTo('living')} className="hover:text-blue-600 transition-colors">Living</button>
-            <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600 transition-colors">Facilities</button>
+            <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600 transition-colors">Why Us</button>
             <button onClick={() => scrollTo('contact')} className="hover:text-blue-600 transition-colors">Contact</button>
-            <button onClick={() => scrollTo('contact')} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black uppercase hover:bg-blue-600 transition-all">Claim Spot</button>
+            <button onClick={() => scrollTo('contact')} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black hover:bg-blue-600 transition-all">Claim Spot</button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section with animated icons */}
+      {/* Hero Section with Icon Hover Pop */}
       <section className="pt-40 pb-24 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
           <div className="flex gap-4 mb-8">
-            <motion.div variants={iconHover} whileHover="hover" className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider cursor-default"><Star size={14}/> Community</motion.div>
-            <motion.div variants={iconHover} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider cursor-default"><Zap size={14}/> Premium</motion.div>
-            <motion.div variants={iconHover} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider cursor-default"><MapPin size={14}/> Al Barsha</motion.div>
+            <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Star size={14}/> Community</motion.div>
+            <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Zap size={14}/> Premium</motion.div>
+            <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><MapPin size={14}/> Al Barsha</motion.div>
           </div>
           
           <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic">Live Bold. <br /><span className="text-slate-400 font-light italic">Study Smart.</span></h1>
-          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student housing in the heart of Al Barsha, Dubai.</p>
+          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student living in the heart of Al Barsha, Dubai.</p>
           <div className="flex gap-4">
             <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight active:scale-95">Explore Living</button>
             <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight active:scale-95">Enquire Now</button>
@@ -165,13 +165,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* Why Makaan */}
+      {/* Why Makaan Section */}
       <section id="facilities" className="py-24 bg-gradient-to-b from-blue-600 to-blue-700 text-white relative">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
               <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan?</h2>
-              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light leading-relaxed uppercase tracking-widest">High-performance living for high-performance students.</p>
+              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light uppercase tracking-widest">High-performance living for high-performance students.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {[
@@ -193,7 +193,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Living Spaces */}
+      {/* Living Section with Placeholder for Standard Room */}
       <section id="living" className="py-32 max-w-6xl mx-auto px-6">
         <Reveal>
           <div className="flex items-center justify-between mb-20">
@@ -207,12 +207,13 @@ export default function App() {
               images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} 
             />
             <RoomCard title="Premium Triple" price="3,000" location="10 mins" available={false} images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} />
-            <RoomCard title="Standard Room" price="2,000" location="20 mins" available={false} images={["https://images.unsplash.com/photo-1594488651083-20630fc6810a?auto=format&fit=crop&q=80&w=800"]} />
+            {/* Added online placeholder for Standard Room */}
+            <RoomCard title="Standard Room" price="2,000" location="20 mins" available={false} images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} />
           </div>
         </Reveal>
       </section>
 
-      {/* Form Section with new fields */}
+      {/* Form Section with Heard via? and Optional Phone */}
       <section id="contact" className="py-32 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
           <Reveal>
@@ -232,7 +233,7 @@ export default function App() {
                <select name="gender" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Gender</option><option>Male</option><option>Female</option></select>
                <select name="institute" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Institute</option><option>Middlesex</option><option>Heriot-Watt</option><option>UOWD</option><option>Other</option></select>
             </div>
-            {/* NEW FIELDS: Source and Phone */}
+            {/* Heard via? and Contact No. (Optional) */}
             <div className="grid grid-cols-2 gap-6 mb-6">
                <select name="source" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Heard via?</option><option>Instagram</option><option>TikTok</option><option>LinkedIn</option><option>Friend</option><option>Other</option></select>
                <input name="phone" type="tel" placeholder="Contact No. (Optional)" className="p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
