@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart, X, ChevronLeft, ChevronRight, Footprints, MessageSquare } from 'lucide-react';
+import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, X, ChevronLeft, ChevronRight, Footprints, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
@@ -19,7 +19,12 @@ const popHover = {
   hover: { y: -10, scale: 1.02, transition: { type: "spring", stiffness: 400, damping: 15 } }
 };
 
-// --- Image Slider Modal (Fixed for Portrait Images) ---
+// Hover effect for hero icons
+const iconHover = {
+  hover: { y: -5, scale: 1.1, transition: { type: "spring", stiffness: 300, damping: 10 } }
+};
+
+// --- Image Slider Modal ---
 const ImageModal = ({ images, isOpen, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -42,7 +47,7 @@ const ImageModal = ({ images, isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="h-[85vh] w-full max-w-4xl flex items-center justify-center"
           >
-            <img src={images[currentIndex]} className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl border border-white/5" alt="Room View" />
+            <img src={images[currentIndex]} className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl" alt="Room View" />
           </motion.div>
           
           <div className="absolute bottom-10 flex gap-2">
@@ -56,7 +61,7 @@ const ImageModal = ({ images, isOpen, onClose }) => {
   );
 };
 
-// --- Room Card (Portrait Aspect Ratio Fix) ---
+// --- Room Card ---
 const RoomCard = ({ title, price, location, metro, images, available = true }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -123,37 +128,36 @@ export default function App() {
 
   return (
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased text-slate-900 bg-white">
-      {/* RESTORED: Navbar buttons */}
+      {/* Navbar with darker links */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg"><Home className="text-white w-4 h-4" /></div>
             <span className="text-xl font-display font-black text-slate-900 tracking-tighter uppercase italic">Makaan</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 font-bold text-slate-400 text-[10px] uppercase tracking-[0.2em]">
-            <button onClick={() => scrollTo('living')} className="hover:text-blue-600">Living</button>
-            <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600">Facilities</button>
-            <button onClick={() => scrollTo('contact')} className="hover:text-blue-600">Contact</button>
-            <button onClick={() => scrollTo('contact')} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black uppercase">Claim Spot</button>
+          <div className="hidden md:flex items-center gap-8 font-bold text-slate-900 text-[10px] uppercase tracking-[0.2em]">
+            <button onClick={() => scrollTo('living')} className="hover:text-blue-600 transition-colors">Living</button>
+            <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600 transition-colors">Facilities</button>
+            <button onClick={() => scrollTo('contact')} className="hover:text-blue-600 transition-colors">Contact</button>
+            <button onClick={() => scrollTo('contact')} className="bg-slate-900 text-white px-6 py-2 rounded-xl text-[11px] font-black uppercase hover:bg-blue-600 transition-all">Claim Spot</button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section with animated icons */}
       <section className="pt-40 pb-24 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          {/* RESTORED: Hero feature icons */}
           <div className="flex gap-4 mb-8">
-            <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider"><Star size={14}/> Community</div>
-            <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider"><Zap size={14}/> Premium</div>
-            <div className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider"><MapPin size={14}/> Al Barsha</div>
+            <motion.div variants={iconHover} whileHover="hover" className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider cursor-default"><Star size={14}/> Community</motion.div>
+            <motion.div variants={iconHover} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider cursor-default"><Zap size={14}/> Premium</motion.div>
+            <motion.div variants={iconHover} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-500 font-bold text-[10px] uppercase tracking-wider cursor-default"><MapPin size={14}/> Al Barsha</motion.div>
           </div>
           
           <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic">Live Bold. <br /><span className="text-slate-400 font-light italic">Study Smart.</span></h1>
           <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student housing in the heart of Al Barsha, Dubai.</p>
           <div className="flex gap-4">
-            <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight">Explore Living</button>
-            <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight">Enquire Now</button>
+            <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight active:scale-95">Explore Living</button>
+            <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight active:scale-95">Enquire Now</button>
           </div>
         </Reveal>
         <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl border-[15px] border-white">
@@ -161,13 +165,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* RESTORED: Why Makaan Section */}
+      {/* Why Makaan */}
       <section id="facilities" className="py-24 bg-gradient-to-b from-blue-600 to-blue-700 text-white relative">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
               <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan?</h2>
-              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light uppercase tracking-widest">High-performance living for high-performance students.</p>
+              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light leading-relaxed uppercase tracking-widest">High-performance living for high-performance students.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {[
@@ -189,7 +193,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Living Section */}
+      {/* Living Spaces */}
       <section id="living" className="py-32 max-w-6xl mx-auto px-6">
         <Reveal>
           <div className="flex items-center justify-between mb-20">
@@ -208,7 +212,7 @@ export default function App() {
         </Reveal>
       </section>
 
-      {/* RESTORED: Full Form Section with Requirements */}
+      {/* Form Section with new fields */}
       <section id="contact" className="py-32 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
           <Reveal>
@@ -227,6 +231,11 @@ export default function App() {
             <div className="grid grid-cols-2 gap-6 mb-6">
                <select name="gender" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Gender</option><option>Male</option><option>Female</option></select>
                <select name="institute" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Institute</option><option>Middlesex</option><option>Heriot-Watt</option><option>UOWD</option><option>Other</option></select>
+            </div>
+            {/* NEW FIELDS: Source and Phone */}
+            <div className="grid grid-cols-2 gap-6 mb-6">
+               <select name="source" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Heard via?</option><option>Instagram</option><option>TikTok</option><option>LinkedIn</option><option>Friend</option><option>Other</option></select>
+               <input name="phone" type="tel" placeholder="Contact No. (Optional)" className="p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
             </div>
             <input name="email" type="email" placeholder="Email Address" required className="w-full mb-6 p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
             <textarea name="requirements" placeholder="Tell us about your housing requirements..." rows="3" className="w-full mb-8 p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100"></textarea>
