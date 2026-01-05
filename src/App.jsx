@@ -128,7 +128,7 @@ export default function App() {
 
   return (
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased text-slate-900 bg-white">
-      {/* Navbar with darker black links */}
+      {/* Navbar */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
@@ -144,10 +144,11 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Hero Section with Icon Hover Pop */}
+      {/* Hero Section */}
       <section className="pt-40 pb-24 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          <div className="flex gap-4 mb-8">
+          {/* FIXED: Reduced gap (mb-8 -> mb-4) */}
+          <div className="flex gap-4 mb-4">
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Star size={14}/> Community</motion.div>
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Zap size={14}/> Premium</motion.div>
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><MapPin size={14}/> Al Barsha</motion.div>
@@ -157,7 +158,8 @@ export default function App() {
           <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student living in the heart of Al Barsha, Dubai.</p>
           <div className="flex gap-4">
             <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight active:scale-95">Explore Living</button>
-            <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight active:scale-95">Enquire Now</button>
+            {/* FIXED: Added hover:scale-105 for pop effect */}
+            <button onClick={() => scrollTo('contact')} className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition-all uppercase tracking-tight active:scale-95 hover:scale-105">Enquire Now</button>
           </div>
         </Reveal>
         <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl border-[15px] border-white">
@@ -171,7 +173,7 @@ export default function App() {
           <Reveal>
             <div className="text-center mb-16">
               <h2 className="text-5xl font-display font-black mb-4 tracking-tighter uppercase italic">Why Makaan?</h2>
-              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light uppercase tracking-widest">High-performance living for high-performance students.</p>
+              <p className="text-blue-100 max-w-xl mx-auto text-sm font-light leading-relaxed uppercase tracking-widest">High-performance living for high-performance students.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {[
@@ -193,7 +195,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Living Section with Placeholder for Standard Room */}
+      {/* Living Section */}
       <section id="living" className="py-32 max-w-6xl mx-auto px-6">
         <Reveal>
           <div className="flex items-center justify-between mb-20">
@@ -207,20 +209,20 @@ export default function App() {
               images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} 
             />
             <RoomCard title="Premium Triple" price="3,000" location="10 mins" available={false} images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} />
-            {/* Added online placeholder for Standard Room */}
             <RoomCard title="Standard Room" price="2,000" location="20 mins" available={false} images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} />
           </div>
         </Reveal>
       </section>
 
-      {/* Form Section with Heard via? and Optional Phone */}
+      {/* Form Section with UPDATED CONTACT INFO */}
       <section id="contact" className="py-32 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
           <Reveal>
             <h2 className="text-7xl font-display font-black tracking-tighter mb-8 uppercase italic">Book <br /> Your Spot <span className="text-blue-600">.</span></h2>
             <div className="space-y-6">
-               <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><Phone className="text-blue-600" /> +971 50 XXX XXXX</div>
-               <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><Mail className="text-blue-600" /> hello@makaan.ae</div>
+               {/* FIXED: Updated Phone and Email */}
+               <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><Phone className="text-blue-600" /> +971 52 660 2999</div>
+               <div className="flex items-center gap-4 font-bold text-xl text-slate-800 break-all"><Mail className="text-blue-600 flex-shrink-0" /> sanat@securemyscholarship.com</div>
                <div className="flex items-center gap-4 font-bold text-2xl text-slate-800"><MapPin className="text-blue-600" /> Al Barsha, Dubai</div>
             </div>
           </Reveal>
@@ -233,7 +235,6 @@ export default function App() {
                <select name="gender" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Gender</option><option>Male</option><option>Female</option></select>
                <select name="institute" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Institute</option><option>Middlesex</option><option>Heriot-Watt</option><option>UOWD</option><option>Other</option></select>
             </div>
-            {/* Heard via? and Contact No. (Optional) */}
             <div className="grid grid-cols-2 gap-6 mb-6">
                <select name="source" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Heard via?</option><option>Instagram</option><option>TikTok</option><option>LinkedIn</option><option>Friend</option><option>Other</option></select>
                <input name="phone" type="tel" placeholder="Contact No. (Optional)" className="p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
