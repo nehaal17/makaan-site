@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, Plus, Minus, Heart, X, ChevronLeft, ChevronRight, Footprints } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
@@ -85,10 +85,10 @@ const RoomCard = ({ title, price, location, metro, images, available = true }) =
         </div>
         <div className="p-6">
           <h3 className="text-xl font-display font-bold text-slate-900 leading-tight mb-3 tracking-tight">{title}</h3>
-          <div className="space-y-2 mb-6 text-slate-500 font-medium text-xs">
-            <div className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-blue-500" /> {location} from Knowledge Park</div>
-            <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-blue-500" /> 3 Person Sharing</div>
-            {metro && <div className="flex items-center gap-2 text-blue-600 font-bold"><Train className="w-3.5 h-3.5" /> {metro}</div>}
+          <div className="space-y-2 mb-6 text-blue-600 font-medium text-xs">
+            <div className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> {location} from Knowledge Park</div>
+            <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5" /> 3 Person Sharing</div>
+            {metro && <div className="flex items-center gap-2"><Footprints className="w-3.5 h-3.5" /> {metro}</div>}
           </div>
           <div className="flex items-center justify-between border-t border-gray-50 pt-5">
             <p className="text-2xl font-display font-black text-blue-600">AED {price}<span className="text-slate-300 text-[10px] font-normal">/mo</span></p>
@@ -167,9 +167,9 @@ export default function App() {
               location="15 mins" 
               metro="5 min walk from Insurance Market Metro Station"
               images={[
-                "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=800"
+                "https://i.imgur.com/3XJ91e2.jpeg",
+                "https://i.imgur.com/G6Z18fR.jpeg",
+                "https://i.imgur.com/8T00o7v.jpeg"
               ]} 
             />
             {/* Sold Out Rooms */}
