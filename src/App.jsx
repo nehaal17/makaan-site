@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, X, ChevronLeft, ChevronRight, Footprints, Share2 } from 'lucide-react';
+import { Home, Users, MapPin, ArrowRight, Star, Wifi, ShieldCheck, Zap, Sofa, Train, Mail, Phone, X, ChevronLeft, ChevronRight, Footprints, Share2, School } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 
@@ -19,7 +19,6 @@ const popHover = {
   hover: { y: -10, scale: 1.02, transition: { type: "spring", stiffness: 400, damping: 15 } }
 };
 
-// Movement effect for Hero Icons
 const iconPop = {
   hover: { y: -8, scale: 1.1, rotate: 2, transition: { type: "spring", stiffness: 400, damping: 10 } }
 };
@@ -87,7 +86,7 @@ const RoomCard = ({ title, price, location, metro, images, available = true }) =
         <div className="p-8">
           <h3 className="text-2xl font-display font-bold text-slate-900 mb-4 tracking-tight">{title}</h3>
           <div className="space-y-3 mb-8 text-blue-600 font-bold text-xs uppercase tracking-wider">
-            <div className="flex items-center gap-3"><MapPin className="w-4 h-4" /> {location} from Knowledge Park</div>
+            <div className="flex items-center gap-3"><MapPin className="w-4 h-4" /> {location}</div>
             <div className="flex items-center gap-3"><Users className="w-4 h-4" /> 3 Person Sharing</div>
             {metro && <div className="flex items-center gap-3"><Footprints className="w-4 h-4" /> {metro}</div>}
           </div>
@@ -128,14 +127,13 @@ export default function App() {
 
   return (
     <div className="font-sans selection:bg-blue-600 selection:text-white antialiased text-slate-900 bg-white">
-      {/* Navbar with Darker Links */}
+      {/* Navbar */}
       <nav className="fixed w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg"><Home className="text-white w-4 h-4" /></div>
             <span className="text-xl font-display font-black text-slate-900 tracking-tighter uppercase italic">Makaan</span>
           </div>
-          {/* FIXED: Darker text links */}
           <div className="hidden md:flex items-center gap-8 font-bold text-slate-900 text-[10px] uppercase tracking-[0.2em]">
             <button onClick={() => scrollTo('living')} className="hover:text-blue-600 transition-colors">Living</button>
             <button onClick={() => scrollTo('facilities')} className="hover:text-blue-600 transition-colors">Why Us</button>
@@ -145,21 +143,19 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Hero Section - FIXED: pt-24 pulls the content up */}
+      {/* Hero Section */}
       <section className="pt-24 pb-20 max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <Reveal>
-          {/* Hero Icons with Hover Pop */}
           <div className="flex gap-4 mb-4">
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full text-blue-600 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Star size={14}/> Community</motion.div>
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><Zap size={14}/> Premium</motion.div>
             <motion.div variants={iconPop} whileHover="hover" className="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full text-slate-900 font-bold text-[10px] uppercase tracking-wider cursor-default shadow-sm"><MapPin size={14}/> Al Barsha</motion.div>
           </div>
           
-          <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic text-slate-900">Live Bold. <br /><span className="text-slate-400 font-light italic text-6xl md:text-8xl">STUDY SMART.</span></h1>
-          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student housing in the heart of Al Barsha, Dubai.</p>
+          <h1 className="text-7xl md:text-8xl font-display font-black leading-[0.9] tracking-tighter mb-8 uppercase italic text-slate-900">Premium <br /><span className="text-slate-400 font-light italic text-6xl md:text-8xl">STUDENT CO-LIVING.</span></h1>
+          <p className="text-xl text-slate-500 font-light mb-10 max-w-md italic leading-relaxed">Luxury student housing, 15 minutes from Dubai Knowledge Park.</p>
           <div className="flex gap-4">
             <button onClick={() => scrollTo('living')} className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-slate-900 transition-all uppercase tracking-tight active:scale-95">Explore Living</button>
-            {/* FIXED: Enquire Now button pop on hover */}
             <motion.button 
               whileHover={{ scale: 1.05 }}
               onClick={() => scrollTo('contact')} 
@@ -174,7 +170,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Why Makaan Section (Keeping your vibrant blue version) */}
+      {/* Why Makaan Section */}
       <section id="facilities" className="py-24 bg-gradient-to-b from-blue-600 to-blue-700 text-white relative">
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <Reveal>
@@ -185,11 +181,11 @@ export default function App() {
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 { icon: Users, t: "Live & Network", d: "Join a thriving community of global students." },
-                { icon: Train, t: "Prime Location", d: "Steps away from the Dubai Metro gateway." },
+                { icon: School, t: "Prime Location", d: "Get to and from classes in just 15 minutes." },
                 { icon: ShieldCheck, t: "24/7 Security", d: "On-site safety teams around the clock." },
-                { icon: Zap, t: "All-Inclusive", d: "Bills, DEWA, and AC included in one price." },
-                { icon: Wifi, t: "Fiber WiFi", d: "Ultra-fast internet for focus and gaming." },
-                { icon: Sofa, t: "Designer Spaces", d: "Move-in ready with modern furniture." }
+                { icon: Zap, t: "All-Inclusive", d: "Utilities, ultra-fast WIFI and AC all included." },
+                { icon: Train, t: "Metro Connectivity", d: "Only 5 mins from Insurance Market station." },
+                { icon: Sofa, t: "Fully Furnished", d: "Move-in ready and hassle free." }
               ].map((item, i) => (
                 <motion.div key={i} variants={popHover} whileHover="hover" whileTap="hover" className="bg-white p-8 rounded-[2.5rem] shadow-xl">
                   <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 text-blue-600"><item.icon size={24} /></div>
@@ -210,15 +206,14 @@ export default function App() {
             <div className="h-px flex-1 bg-slate-100 mx-10 hidden md:block"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-12">
-            <RoomCard title="Modern Shared" price="2,500" location="15 mins" metro="5 min walk from Insurance Market Metro Station" images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} />
-            <RoomCard title="Premium Triple" price="3,000" location="10 mins" available={false} images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} />
-            {/* Standard Room Image Added */}
-            <RoomCard title="Standard Room" price="2,000" location="20 mins" available={false} images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} />
+            <RoomCard title="Premium Shared" price="2,500" location="15 mins from Knowledge Park" metro="5 min walk from Insurance Market Metro Station" images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} />
+            <RoomCard title="Affordable Shared" price="1,999" location="30 mins from Knowledge Park" metro="5 min walk from Union Metro Station" available={true} images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} />
+            <RoomCard title="Standard Shared" price="2,250" location="15 mins from Knowledge Park" metro="5 min walk from Insurance Market metro station" available={true} images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} />
           </div>
         </Reveal>
       </section>
 
-      {/* Form Section with Correct Contact Info */}
+      {/* Form Section */}
       <section id="contact" className="py-32 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
           <Reveal>
@@ -236,10 +231,26 @@ export default function App() {
             </div>
             <div className="grid grid-cols-2 gap-6 mb-6">
                <select name="gender" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Gender</option><option>Male</option><option>Female</option></select>
-               <select name="institute" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Institute</option><option>Middlesex</option><option>Heriot-Watt</option><option>UOWD</option><option>Other</option></select>
+               <select name="institute" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100">
+                  <option value="">Institute</option>
+                  <option>University of Wollongong Dubai</option>
+                  <option>Middlesex University Dubai</option>
+                  <option>Heriot-Watt University Dubai</option>
+                  <option>De Montfort University Dubai</option>
+                  <option>Murdoch University Dubai</option>
+                  <option>Symbiosis International University</option>
+                  <option>Other</option>
+               </select>
             </div>
             <div className="grid grid-cols-2 gap-6 mb-6">
-               <select name="source" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100"><option value="">Heard via?</option><option>Instagram</option><option>TikTok</option><option>LinkedIn</option><option>Friend</option><option>Other</option></select>
+               <select name="source" required className="p-5 rounded-2xl bg-slate-50 text-slate-400 text-sm font-bold outline-none focus:ring-2 ring-blue-100">
+                  <option value="">Heard via?</option>
+                  <option>University Rep</option>
+                  <option>Referral</option>
+                  <option>Instagram</option>
+                  <option>TikTok</option>
+                  <option>Other</option>
+               </select>
                <input name="phone" type="tel" placeholder="Contact No. (Optional)" className="p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
             </div>
             <input name="email" type="email" placeholder="Email Address" required className="w-full mb-6 p-5 rounded-2xl bg-slate-50 text-sm font-bold border-none outline-none focus:ring-2 ring-blue-100" />
