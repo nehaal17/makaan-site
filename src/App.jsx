@@ -68,15 +68,15 @@ const RoomCard = ({ title, price, location, metro, images, available = true }) =
       <motion.div 
         whileHover={available ? "hover" : {}}
         whileTap={available ? { scale: 0.98 } : {}}
-        variants={popHover}
+        variants={available ? popHover : {}} // Disable hover effect if sold out
         onClick={() => available && setIsModalOpen(true)}
-        className={`bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm transition-all ${available ? 'hover:shadow-2xl cursor-pointer' : 'opacity-60 grayscale-[0.8] cursor-not-allowed'}`}
+        className={`bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm transition-all ${available ? 'hover:shadow-2xl cursor-pointer' : 'opacity-40 grayscale pointer-events-none cursor-not-allowed border-gray-200'}`}
       >
         <div className="relative aspect-[4/5] overflow-hidden bg-slate-100 group">
-          <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+          <img src={images[0]} alt={title} className={`w-full h-full object-cover transition-transform duration-1000 ${available ? 'group-hover:scale-110' : ''}`} />
           {!available && (
-            <div className="absolute inset-0 bg-slate-900/50 flex items-center justify-center">
-              <span className="bg-white/90 backdrop-blur-md text-slate-900 px-6 py-2 rounded-full font-black uppercase text-[10px] tracking-widest shadow-xl">Sold Out</span>
+            <div className="absolute inset-0 bg-slate-900/60 flex items-center justify-center">
+              <span className="bg-red-600 text-white px-8 py-3 rounded-full font-black uppercase text-[12px] tracking-[0.2em] shadow-2xl ring-4 ring-red-600/20">Sold Out</span>
             </div>
           )}
           {available && (
@@ -92,7 +92,11 @@ const RoomCard = ({ title, price, location, metro, images, available = true }) =
           </div>
           <div className="flex items-center justify-between border-t border-gray-50 pt-6">
             <p className="text-3xl font-display font-black text-blue-600">AED {price}<span className="text-slate-300 text-xs font-normal">/mo</span></p>
-            {available && <div className="bg-slate-50 p-4 rounded-2xl text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm"><ArrowRight size={20} /></div>}
+            {available ? (
+              <div className="bg-slate-50 p-4 rounded-2xl text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm"><ArrowRight size={20} /></div>
+            ) : (
+              <span className="text-slate-400 font-black uppercase text-[10px] tracking-widest">Booked</span>
+            )}
           </div>
         </div>
       </motion.div>
@@ -206,9 +210,32 @@ export default function App() {
             <div className="h-px flex-1 bg-slate-100 mx-10 hidden md:block"></div>
           </div>
           <div className="grid md:grid-cols-3 gap-12">
-            <RoomCard title="Premium Shared" price="2,500" location="15 mins from Knowledge Park" metro="5 min walk from Insurance Market Metro Station" images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} />
-            <RoomCard title="Affordable Shared" price="1,999" location="30 mins from Knowledge Park" metro="5 min walk from Union Metro Station" available={true} images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} />
-            <RoomCard title="Standard Shared" price="2,250" location="15 mins from Knowledge Park" metro="5 min walk from Insurance Market metro station" available={true} images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} />
+            {/* THIS ONE IS AVAILABLE */}
+            <RoomCard 
+              title="Premium Shared" 
+              price="2,500" 
+              location="15 mins from Knowledge Park" 
+              metro="5 min walk from Insurance Market Metro Station" 
+              available={true}
+              images={["/room1.jpeg", "/room2.jpeg", "/room3.jpeg"]} 
+            />
+            {/* THESE TWO ARE SOLD OUT */}
+            <RoomCard 
+              title="Affordable Shared" 
+              price="1,999" 
+              location="30 mins from Knowledge Park" 
+              metro="5 min walk from Union Metro Station" 
+              available={false} 
+              images={["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000"]} 
+            />
+            <RoomCard 
+              title="Standard Shared" 
+              price="2,250" 
+              location="15 mins from Knowledge Park" 
+              metro="5 min walk from Insurance Market metro station" 
+              available={false} 
+              images={["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800"]} 
+            />
           </div>
         </Reveal>
       </section>
